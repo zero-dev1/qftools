@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Sniffer — QF Tools</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <style>
+    .coming-soon {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .coming-soon h2 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+    .coming-soon p {
+      color: var(--muted);
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 600px;
+      margin: 30px auto 0;
+      text-align: left;
+    }
+    @media (max-width: 600px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+    .tier-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+    }
+    .tier-card h3 { font-size: 1rem; margin-bottom: 10px; }
+    .tier-card ul {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .tier-card ul li { padding: 4px 0; }
+    .tier-card ul li::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .tier-free ul li::before { background: var(--green); }
+    .tier-paid ul li::before { background: var(--accent); }
+    .tier-paid { border-color: var(--accent); }
+    .burn-note {
+      margin-top: 30px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .burn-note p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .burn-note strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Token <span>Sniffer</span></h1>
+      <p class="subtitle">Automated safety analysis for token contracts on QF Network</p>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Important:</strong> This tool performs automated checks only. It is not a security audit.
+      A passing score does not guarantee a token is safe. Always do your own research before interacting with any token.
+      No score, badge, or listing constitutes financial advice or an endorsement.
+    </div>
+
+    <div class="coming-soon">
+      <span class="badge badge-accent" style="font-size: 0.85rem; padding: 6px 14px;">Coming Soon</span>
+      <h2 style="margin-top: 20px;">Automated Safety Scores</h2>
+      <p>Scan any token contract for common risks. Developers can apply for a QF Tools Verified badge to show confidence in their contract.</p>
+
+      <div class="two-col">
+        <div class="tier-card tier-free">
+          <h3><span class="badge badge-green">Free</span> Scan</h3>
+          <ul>
+            <li>Honeypot detection</li>
+            <li>Ownership analysis</li>
+            <li>Mint function check</li>
+            <li>Liquidity status</li>
+            <li>Basic safety score</li>
+          </ul>
+        </div>
+
+        <div class="tier-card tier-paid">
+          <h3><span class="badge badge-accent">Verified</span> Badge</h3>
+          <ul>
+            <li>Full automated analysis</li>
+            <li>Verified badge on directory</li>
+            <li>Featured token listing</li>
+            <li>Detailed report page</li>
+            <li>Developer credibility signal</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="burn-note">
+        <p><strong>QF Burn Mechanism:</strong> Verification fees are paid in QF and permanently burned.
+        Every verified listing reduces QF supply — developers invest in their token's credibility
+        whilst contributing to the QF ecosystem.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="/">QF Tools</a> &mdash; Not a security audit &mdash; Not financial advice &mdash; Always DYOR
+  </footer>
+
+  <script src="../shared/nav.js"></script>
+</body>
+</html>

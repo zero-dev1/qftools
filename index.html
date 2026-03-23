@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QF Tools — Community Tools for QF Network</title>
+  <link rel="stylesheet" href="shared/styles.css">
+  <style>
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    .hero h1 { font-size: 2.5rem; }
+    .hero .subtitle { font-size: 1rem; margin-top: 8px; }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .tool-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .tool-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .tool-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .tool-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+    .tool-card .tag {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .tag-free { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .tag-coming { background: rgba(99, 102, 241, 0.15); color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1><span>QF</span> Tools</h1>
+      <p class="subtitle">Free community tools for QF Network — Chain ID 42</p>
+    </div>
+
+    <div class="tools-grid">
+      <a href="explorer/" class="tool-card">
+        <h3>Explorer</h3>
+        <p>Look up the last 50 transactions for any wallet address on QF Network.</p>
+        <span class="tag tag-free">Free</span>
+      </a>
+
+      <a href="tokens/" class="tool-card">
+        <h3>Token Directory</h3>
+        <p>Browse tokens deployed on QF Network. Contract addresses, decimals, and details.</p>
+        <span class="tag tag-free">Free</span>
+      </a>
+
+      <a href="gas/" class="tool-card">
+        <h3>Gas Station</h3>
+        <p>Real-time gas prices on QF Network with historical data.</p>
+        <span class="tag tag-free">Free</span>
+      </a>
+
+      <a href="verify/" class="tool-card">
+        <h3>Contract Verifier</h3>
+        <p>Verify smart contract source code matches deployed bytecode.</p>
+        <span class="tag tag-coming">Coming Soon</span>
+      </a>
+
+      <a href="sniffer/" class="tool-card">
+        <h3>Token Sniffer</h3>
+        <p>Automated safety analysis for token contracts. Honeypot checks, ownership analysis, and safety scores.</p>
+        <span class="tag tag-coming">Coming Soon</span>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    QF Tools &mdash; Community tools for QF Network &mdash; Not financial advice
+  </footer>
+
+  <script src="shared/nav.js"></script>
+</body>
+</html>
