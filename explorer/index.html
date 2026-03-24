@@ -83,6 +83,11 @@
       border-color: var(--accent);
     }
     .section-hidden { display: none; }
+    .qf-name {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
     @media (max-width: 600px) {
       .tx-row { flex-direction: column; align-items: flex-start; }
       .account-row { flex-direction: column; gap: 2px; }
@@ -151,6 +156,11 @@
       return addr;
     }
 
+    function displayAddr(addr, name) {
+      if (name) return `<span class="qf-name">${name}</span>`;
+      return truncAddr(addr);
+    }
+
     function formatQF(amount) {
       const n = parseFloat(amount);
       if (n >= 1000000) return (n / 1000000).toFixed(2) + "M";
@@ -217,7 +227,7 @@
           const b = acct.balance;
           html += `
             <div class="card account-card">
-              <h3 style="margin-bottom: 12px;">Account Balance</h3>
+              <h3 style="margin-bottom: 12px;">${b.name ? `<span class="qf-name" style="font-size: 1.2rem;">${b.name}</span>` : "Account Balance"}</h3>
               <div class="account-row">
                 <span class="account-label">Address</span>
                 <span class="account-value" style="font-size: 0.75rem;">${b.address}</span>
@@ -269,7 +279,7 @@
             html += `
               <div class="card tx-card">
                 <div class="tx-row">
-                  <span class="tx-addr">${truncAddr(isOut ? tx.to : tx.from)}</span>
+                  <span class="tx-addr">${isOut ? displayAddr(tx.to, tx.toName) : displayAddr(tx.from, tx.fromName)}</span>
                   <span>
                     <span class="badge ${badgeClass}">${dirLabel}</span>
                     <span class="tx-value ${valueClass}">${sign}${formatQF(tx.amountQF)} QF</span>
@@ -346,7 +356,7 @@
             acctHtml += `
               <div class="card tx-card" style="cursor: pointer;" onclick="input.value='${a.address}'; searchAddress();">
                 <div class="tx-row">
-                  <span class="tx-addr">${truncAddr(a.address)}</span>
+                  <span class="tx-addr">${a.name ? `<span class="qf-name">${a.name}</span> <span style="color:var(--muted);font-size:0.75rem;">${truncAddr(a.address)}</span>` : truncAddr(a.address)}</span>
                   <span class="tx-value" style="color: var(--accent);">${formatQF(a.totalQF)} QF</span>
                 </div>
                 <div class="tx-details">
@@ -371,7 +381,7 @@
             txHtml += `
               <div class="card tx-card">
                 <div class="tx-row">
-                  <span class="tx-addr">${truncAddr(tx.from)} &rarr; ${truncAddr(tx.to)}</span>
+                  <span class="tx-addr">${displayAddr(tx.from, tx.fromName)} &rarr; ${displayAddr(tx.to, tx.toName)}</span>
                   <span class="tx-value" style="color: var(--accent);">${formatQF(tx.amountQF)} QF</span>
                 </div>
                 <div class="tx-details">
@@ -396,7 +406,7 @@
                   <span class="tx-method">${ext.call}</span>
                   <span>
                     <span class="badge ${statusClass}">${ext.success ? "OK" : "Fail"}</span>
-                    <span class="tx-addr">${truncAddr(ext.signer)}</span>
+                    <span class="tx-addr">${displayAddr(ext.signer, ext.signerName)}</span>
                   </span>
                 </div>
                 <div class="tx-details">
