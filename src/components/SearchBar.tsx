@@ -67,9 +67,13 @@ export function SearchBar({ className = '' }: { className?: string }) {
         )}
 
         {/* ⌘K badge on the right */}
-        <div className="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none">
-          <div className="text-[10px] font-mono text-white/30 border border-white/10 rounded px-1.5 py-0.5">⌘K</div>
-        </div>
+        <button
+          type="button"
+          onClick={() => document.dispatchEvent(new CustomEvent('open-spotlight'))}
+          className="absolute inset-y-0 right-0 pr-5 flex items-center"
+        >
+          <div className="text-[10px] font-mono text-white/30 border border-white/10 rounded px-1.5 py-0.5 hover:text-white/50 hover:border-white/20 transition-colors">⌘K</div>
+        </button>
       </div>
     </form>
   );

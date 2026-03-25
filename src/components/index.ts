@@ -13,3 +13,4 @@ export { Navbar } from './Navbar';
 export { PageTransition } from './PageTransition';
 export { ScrollToTop } from './ScrollToTop';
 export { ErrorBoundary } from './ErrorBoundary';
+export { SearchModal } from './SearchModal';
