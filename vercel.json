@@ -1,5 +1,11 @@
 {
+  "functions": {
+    "api/og-meta.ts": {
+      "includeFiles": "dist/**"
+    }
+  },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/(.*)", "destination": "/api/og-meta" }
   ]
 }
