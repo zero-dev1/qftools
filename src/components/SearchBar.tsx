@@ -1,24 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTypewriter } from '../hooks/useTypewriter';
 
 const placeholders = [
-  "Search a .qf name...",
-  "Search an address...",
-  "Search a block number...",
+  "Search alice.qf",
+  "Search 15893042", 
+  "Search 0x7a2b...9f1e"
 ];
 
 export function SearchBar({ className = '' }: { className?: string }) {
   const [query, setQuery] = useState('');
-  const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const placeholderText = useTypewriter(placeholders);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,16 +34,10 @@ export function SearchBar({ className = '' }: { className?: string }) {
 
   return (
     <form onSubmit={handleSubmit} className={className}>
-      <div className="relative bg-[#111111] border border-white/10 rounded-xl h-14 px-5 focus-within:border-white/20 transition-colors duration-200">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder={placeholders[placeholderIndex]}
-          className="w-full h-full bg-transparent text-white placeholder:text-white/30 font-body focus:outline-none"
-        />
-        <div className="absolute right-5 top-1/2 -translate-y-1/2 text-white/30">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <div className="relative bg-[#111111] border border-white/10 rounded-xl h-14 focus-within:border-white/20 transition-colors duration-200">
+        {/* Magnifying glass on the left */}
+        <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none" className="w-5 h-5 text-white/30">
             <path
               d="M7.333 12.667A5.333 5.333 0 107.333 2a5.333 5.333 0 000 10.667zM14 14l-2.9-2.9"
               stroke="currentColor"
@@ -59,6 +46,29 @@ export function SearchBar({ className = '' }: { className?: string }) {
               strokeLinejoin="round"
             />
           </svg>
+        </div>
+
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder=""
+          className="w-full h-full bg-transparent text-white placeholder:text-transparent font-body focus:outline-none pl-12 pr-16"
+        />
+
+        {/* Typewriter placeholder overlay */}
+        {!query && (
+          <div className="absolute inset-y-0 left-12 right-16 flex items-center pointer-events-none overflow-hidden">
+            <span className="font-body text-white/30 whitespace-nowrap">
+              {placeholderText}
+              <span className="animate-pulse border-r-2 border-white/30 ml-[1px] h-4 inline-block align-middle" />
+            </span>
+          </div>
+        )}
+
+        {/* ⌘K badge on the right */}
+        <div className="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none">
+          <div className="text-[10px] font-mono text-white/30 border border-white/10 rounded px-1.5 py-0.5">⌘K</div>
         </div>
       </div>
     </form>

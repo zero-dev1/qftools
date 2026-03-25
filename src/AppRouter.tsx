@@ -12,7 +12,7 @@ function AppRouterInner() {
   useGlobalKeyboardShortcuts();
   
   return (
-    <div className="pt-14">
+    <main className="max-w-[1440px] mx-auto pt-14 px-6 md:px-20 lg:px-[124px] pb-20">
       <Routes>
         <Route path="/" element={<PageTransition><Explorer /></PageTransition>} />
         <Route path="/explorer" element={<PageTransition><Explorer /></PageTransition>} />
@@ -22,7 +22,7 @@ function AppRouterInner() {
         <Route path="/burn" element={<PageTransition><Burn /></PageTransition>} />
         <Route path="/accounts" element={<PageTransition><Accounts /></PageTransition>} />
       </Routes>
-    </div>
+    </main>
   );
 }
 

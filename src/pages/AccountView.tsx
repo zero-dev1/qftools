@@ -19,68 +19,56 @@ export function AccountView() {
   if (!id) {
     return (
       <PageTransition>
-        <div className="min-h-screen bg-[#0A0A0A] text-white pt-14">
-        <div className="max-w-2xl mx-auto px-4 py-8">
-          <EmptyState
-            icon={
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke="currentColor" strokeWidth="1"/>
-                <path d="M12 8v4" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                <circle cx="12" cy="15" r="1" fill="currentColor"/>
-              </svg>
-            }
-            title="Invalid account"
-            description="Please provide a valid address or .qf name."
-          />
-        </div>
-      </div>
-    </PageTransition>
+        <EmptyState
+          icon={
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke="currentColor" strokeWidth="1"/>
+              <path d="M12 8v4" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+              <circle cx="12" cy="15" r="1" fill="currentColor"/>
+            </svg>
+          }
+          title="Invalid account"
+          description="Please provide a valid address or .qf name."
+        />
+      </PageTransition>
     );
   }
 
   if (loading) {
     return (
       <PageTransition>
-        <div className="min-h-screen bg-[#0A0A0A] text-white pt-14">
-        <div className="max-w-2xl mx-auto px-4 py-8">
-          {/* Hero Section Skeleton */}
-          <div className="text-center pt-12 pb-8">
-            <Skeleton width={80} height={80} className="rounded-full mx-auto mb-4" />
-            <Skeleton width={200} height={36} className="mx-auto mb-2" />
-            <Skeleton width={400} height={12} className="mx-auto mb-2" />
-            <Skeleton width={300} height={14} className="mx-auto" />
-          </div>
-          
-          {/* Balance Section Skeleton */}
-          <div className="text-center mt-6">
-            <Skeleton width={200} height={36} className="mx-auto mb-2" />
-            <Skeleton width={150} height={13} className="mx-auto" />
-          </div>
+        {/* Hero Section Skeleton */}
+        <div className="text-center pt-12 pb-8">
+          <Skeleton width={80} height={80} className="rounded-full mx-auto mb-4" />
+          <Skeleton width={200} height={36} className="mx-auto mb-2" />
+          <Skeleton width={400} height={12} className="mx-auto mb-2" />
+          <Skeleton width={300} height={14} className="mx-auto" />
         </div>
-      </div>
-    </PageTransition>
+        
+        {/* Balance Section Skeleton */}
+        <div className="text-center mt-6">
+          <Skeleton width={200} height={36} className="mx-auto mb-2" />
+          <Skeleton width={150} height={13} className="mx-auto" />
+        </div>
+      </PageTransition>
     );
   }
 
   if (error || !accountData?.found) {
     return (
       <PageTransition>
-        <div className="min-h-screen bg-[#0A0A0A] text-white pt-14">
-        <div className="max-w-2xl mx-auto px-4 py-8">
-          <EmptyState
-            icon={
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke="currentColor" strokeWidth="1"/>
-                <path d="M12 8v4" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                <circle cx="12" cy="15" r="1" fill="currentColor"/>
-              </svg>
-            }
-            title="Account not found"
-            description="This address has no on-chain activity."
-          />
-        </div>
-      </div>
-    </PageTransition>
+        <EmptyState
+          icon={
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke="currentColor" strokeWidth="1"/>
+              <path d="M12 8v4" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+              <circle cx="12" cy="15" r="1" fill="currentColor"/>
+            </svg>
+          }
+          title="Account not found"
+          description="This address has no on-chain activity."
+        />
+      </PageTransition>
     );
   }
 
@@ -88,15 +76,13 @@ export function AccountView() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#0A0A0A] text-white pt-14">
-        <div className="max-w-2xl mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          className="text-center pt-12 pb-8"
-        >
+      {/* Hero Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        className="text-center pt-12 pb-8"
+      >
           {/* Avatar */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -146,24 +132,6 @@ export function AccountView() {
               )}
             </button>
           </motion.div>
-
-          {/* Bio */}
-          {account.name && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.4 }}
-              className="mt-2"
-            >
-              <p className="font-body text-sm text-white/50 max-w-md mx-auto">
-                {account.name.includes('deployer') && 'QF Network deployer account'}
-                {account.name.includes('qfpay') && 'QFPay — Instant payments on QF Network'}
-                {account.name.includes('qns') && 'QF Name Service — Your identity on QF Network'}
-                {account.name.includes('qflink') && 'QFLink — On-chain messaging'}
-                {account.name.includes('hardwired') && 'Building on QF since day one'}
-              </p>
-            </motion.div>
-          )}
 
           {/* No-name CTA */}
           {!account.name && (
@@ -256,8 +224,6 @@ export function AccountView() {
             </div>
           )}
         </motion.div>
-      </div>
-      </div>
     </PageTransition>
   );
 }

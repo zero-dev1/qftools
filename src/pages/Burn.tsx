@@ -13,15 +13,13 @@ export function Burn() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#0A0A0A] text-white pt-14">
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        {/* Hero Counter */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="text-center pt-16 pb-8"
-        >
+      {/* Hero Counter */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="text-center pt-16 pb-8"
+      >
           <div className="font-display text-[48px] font-bold text-white">
             <AnimatePresence mode="wait">
               <motion.div
@@ -219,8 +217,6 @@ export function Burn() {
             </div>
           )}
         </motion.div>
-        </div>
-      </div>
     </PageTransition>
   );
 }

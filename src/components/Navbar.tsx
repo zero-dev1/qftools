@@ -19,8 +19,8 @@ export function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent border-b border-white/5">
-      <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0A]/80 backdrop-blur-md border-b border-white/5">
+      <div className="max-w-[1440px] mx-auto h-full px-6 md:px-20 lg:px-[124px] flex items-center justify-between">
         <Link 
           to="/explorer" 
           className="flex items-baseline gap-1 hover:opacity-80 transition-opacity duration-200"
