@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Clash Display", sans-serif;
+  --font-body: "Satoshi", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-bg-primary: #0A0A0A;
+  --color-bg-card: #111111;
+  --color-qns: #00D179;
+  --color-qfpay: #0052FF;
+  --color-burn: #E85D25;
+  --color-burnRed: #C13333;
+
+  --animate-sync-pulse: sync-pulse 2s infinite;
+
+  @keyframes sync-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+  }
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: white;
+  font-family: var(--font-body);
+}
