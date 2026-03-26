@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Coins, Fuel, Flame } from 'lucide-react';
 
 export function Navbar() {
   const location = useLocation();
@@ -8,10 +9,10 @@ export function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
-    { path: '/explorer', label: 'Explorer' },
-    { path: '/tokens', label: 'Tokens' },
-    { path: '/gas', label: 'Gas' },
-    { path: '/burn', label: 'Burn' },
+    { path: '/explorer', label: 'Explorer', icon: Search },
+    { path: '/tokens', label: 'Tokens', icon: Coins },
+    { path: '/gas', label: 'Gas', icon: Fuel },
+    { path: '/burn', label: 'Burn', icon: Flame },
   ];
 
   const isActive = (path: string) => {
@@ -67,30 +68,38 @@ export function Navbar() {
 
           {/* Desktop nav links — hidden on mobile */}
           <div className="hidden md:flex items-center gap-6 md:gap-8 ml-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`relative font-body font-medium text-[13px] transition-all duration-200 py-1 ${
-                  isActive(item.path)
-                    ? 'text-white'
-                    : 'text-white/40 hover:text-white/60'
-                }`}
-              >
-                {item.label}
-                {isActive(item.path) && (
-                  <motion.div
-                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-white rounded-full"
-                    layoutId="activeNav"
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                  />
-                )}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const active = isActive(item.path);
+              const isBurn = item.path === '/burn';
+              const activeColor = isBurn ? 'text-[#E85D25]' : 'text-white';
+              const dotColor = isBurn ? 'bg-[#E85D25]' : 'bg-white';
+
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`relative font-body font-medium text-[13px] transition-all duration-200 py-1 ${
+                    active ? activeColor : 'text-white/40 hover:text-white/60'
+                  }`}
+                >
+                  {item.label}
+                  {active && (
+                    <motion.div
+                      className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 ${dotColor} rounded-full`}
+                      layoutId="activeNav"
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right section — spacer pushes to the right */}
           <div className="flex-1" />
+
+          {/* Desktop divider before search */}
+          <div className="hidden md:block w-px h-4 bg-white/[0.06] mr-4" />
 
           {/* Search trigger — always visible */}
           <button
@@ -134,22 +143,29 @@ export function Navbar() {
               className="md:hidden absolute top-full left-0 right-0 mt-2 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.06] rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.3)]"
             >
               <div className="py-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`flex items-center px-5 py-3 font-body text-[14px] transition-colors duration-150 ${
-                      isActive(item.path)
-                        ? 'text-white bg-white/[0.04]'
-                        : 'text-white/50 hover:text-white/70 hover:bg-white/[0.02]'
-                    }`}
-                  >
-                    {item.label}
-                    {isActive(item.path) && (
-                      <span className="ml-auto w-1 h-1 rounded-full bg-white" />
-                    )}
-                  </Link>
-                ))}
+                {navItems.map((item) => {
+                  const active = isActive(item.path);
+                  const isBurn = item.path === '/burn';
+                  const mobileActiveColor = isBurn && active ? 'text-[#E85D25]' : active ? 'text-white' : 'text-white/50';
+                  const mobileIconColor = isBurn && active ? 'text-[#E85D25]' : active ? 'text-white/70' : 'text-white/20';
+                  const mobileDotColor = isBurn ? 'bg-[#E85D25]' : 'bg-white';
+
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`flex items-center gap-3 px-5 py-3 font-body text-[14px] transition-colors duration-150 ${
+                        active ? `${mobileActiveColor} bg-white/[0.04]` : 'text-white/50 hover:text-white/70 hover:bg-white/[0.02]'
+                      }`}
+                    >
+                      <item.icon size={16} className={`${mobileIconColor} transition-colors duration-150`} />
+                      {item.label}
+                      {active && (
+                        <span className={`ml-auto w-1 h-1 rounded-full ${mobileDotColor}`} />
+                      )}
+                    </Link>
+                  );
+                })}
               </div>
             </motion.div>
           )}
