@@ -99,7 +99,7 @@ export function Navbar() {
           <div className="flex-1" />
 
           {/* Desktop divider before search */}
-          <div className="hidden md:block w-px h-4 bg-white/[0.06] mr-4" />
+          <div className="hidden md:block w-px h-4 bg-white/[0.06] ml-6 mr-4" />
 
           {/* Search trigger — always visible */}
           <button
