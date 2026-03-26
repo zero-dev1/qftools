@@ -1,11 +1,19 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "functions": {
     "api/og-meta.ts": {
       "includeFiles": "dist/**"
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/sounds/(.*)", "destination": "/sounds/$1" },
+    { "source": "/og/(.*)", "destination": "/og/$1" },
+    { "source": "/favicon.svg", "destination": "/favicon.svg" },
+    { "source": "/apple-touch-icon.png", "destination": "/apple-touch-icon.png" },
+    { "source": "/manifest.json", "destination": "/manifest.json" },
+    { "source": "/icons/(.*)", "destination": "/icons/$1" },
     { "source": "/(.*)", "destination": "/api/og-meta" }
   ]
 }
