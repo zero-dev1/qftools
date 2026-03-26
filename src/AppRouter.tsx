@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Navbar, PageTransition, ScrollToTop, ErrorBoundary, RouteSound } from './components';
+import { Navbar, PageTransition, ScrollToTop, ErrorBoundary } from './components';
 import { SearchModal } from './components/SearchModal';
 import { useSpotlight } from './hooks/useKeyboardShortcuts';
 import { Explorer } from './pages/Explorer';
@@ -48,7 +48,6 @@ export function AppRouter() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        <RouteSound />
         <ScrollToTop />
         <Navbar />
         <AppRouterInner />

@@ -1,16 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX } from 'lucide-react';
-import { useSoundStore } from '../stores/soundStore';
-import { useHoverSound } from '../hooks/useHoverSound';
 
 export function Navbar() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const { enabled, toggle } = useSoundStore();
-  const { onMouseEnter } = useHoverSound();
 
   const navItems = [
     { path: '/explorer', label: 'Explorer' },
@@ -76,7 +71,6 @@ export function Navbar() {
               <Link
                 key={item.path}
                 to={item.path}
-                onMouseEnter={onMouseEnter}
                 className={`relative font-body font-medium text-[13px] transition-all duration-200 py-1 ${
                   isActive(item.path)
                     ? 'text-white'
@@ -98,25 +92,6 @@ export function Navbar() {
           {/* Right section — spacer pushes to the right */}
           <div className="flex-1" />
 
-          {/* Desktop divider */}
-          <div className="hidden md:block w-px h-4 bg-white/[0.06] ml-6 mr-4" />
-
-          {/* Sound toggle — desktop only */}
-          <button
-            onClick={toggle}
-            className="hidden md:flex items-center justify-center w-8 h-8 hover:opacity-80 transition-opacity duration-200"
-            aria-label={enabled ? "Sounds on" : "Sounds off"}
-          >
-            {enabled ? (
-              <Volume2 size={16} className="text-white/40" />
-            ) : (
-              <VolumeX size={16} className="text-white/20" />
-            )}
-          </button>
-
-          {/* Desktop divider */}
-          <div className="hidden md:block w-px h-4 bg-white/[0.06] mr-6" />
-
           {/* Search trigger — always visible */}
           <button
             onClick={() => document.dispatchEvent(new CustomEvent('open-spotlight'))}
@@ -134,23 +109,10 @@ export function Navbar() {
             </div>
           </button>
 
-          {/* Sound toggle — mobile only */}
-          <button
-            onClick={toggle}
-            className="md:hidden flex items-center justify-center ml-2 w-8 h-8 hover:opacity-80 transition-opacity duration-200"
-            aria-label={enabled ? "Sounds on" : "Sounds off"}
-          >
-            {enabled ? (
-              <Volume2 size={16} className="text-white/40" />
-            ) : (
-              <VolumeX size={16} className="text-white/20" />
-            )}
-          </button>
-
           {/* Three-dot menu button — mobile only */}
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="md:hidden flex items-center justify-center ml-1 w-8 h-8 -mr-1 rounded-lg hover:bg-white/[0.05] transition-colors"
+            className="md:hidden flex items-center justify-center ml-3 w-8 h-8 -mr-1 rounded-lg hover:bg-white/[0.05] transition-colors"
             aria-label="Menu"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-white/40">
@@ -188,24 +150,6 @@ export function Navbar() {
                     )}
                   </Link>
                 ))}
-              </div>
-              
-              {/* Sound toggle in mobile dropdown */}
-              <div className="border-t border-white/[0.06]">
-                <div className="flex items-center justify-between px-5 py-3">
-                  <span className="font-body text-[14px] text-white/40">Sounds</span>
-                  <button
-                    onClick={toggle}
-                    className="flex items-center justify-center w-8 h-8 hover:opacity-80 transition-opacity duration-200"
-                    aria-label={enabled ? "Sounds on" : "Sounds off"}
-                  >
-                    {enabled ? (
-                      <Volume2 size={16} className="text-white/40" />
-                    ) : (
-                      <VolumeX size={16} className="text-white/20" />
-                    )}
-                  </button>
-                </div>
               </div>
             </motion.div>
           )}

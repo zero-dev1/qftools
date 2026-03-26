@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { GradientAvatar } from './GradientAvatar';
 import { useAccounts } from '../hooks/useAccounts';
-import { useSound } from '../hooks/useSound';
-import { useHoverSound } from '../hooks/useHoverSound';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -17,9 +15,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const { data: accountsData } = useAccounts(200);
-  const { play } = useSound();
-  const { onMouseEnter } = useHoverSound();
-  const hasHoverRef = useRef(typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches);
 
   const accounts = accountsData?.accounts || [];
 
@@ -39,22 +34,20 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       if (e.key === 'Escape') {
         e.preventDefault();
         e.stopPropagation();
-        play('spotlight-close');
         onClose();
       }
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, [isOpen, onClose, play]);
+  }, [isOpen, onClose]);
 
   useEffect(() => {
     if (isOpen) {
-      play('spotlight-open');
       setQuery('');
       setSelectedIndex(0);
       setTimeout(() => inputRef.current?.focus(), 50);
     }
-  }, [isOpen, play]);
+  }, [isOpen]);
 
   useEffect(() => {
     setSelectedIndex(0);
@@ -62,26 +55,22 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   const handleSelect = useCallback((account: typeof accounts[0]) => {
     const id = account.name || account.address;
-    play('spotlight-select');
     navigate(`/explorer/${id}`);
     onClose();
-  }, [navigate, onClose, play]);
+  }, [navigate, onClose]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedIndex(prev => Math.min(prev + 1, filtered.length - 1));
-      play('hover-tick');
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setSelectedIndex(prev => Math.max(prev - 1, 0));
-      play('hover-tick');
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (filtered.length > 0 && filtered[selectedIndex]) {
         handleSelect(filtered[selectedIndex]);
       } else if (query.trim()) {
-        play('spotlight-select');
         navigate(`/explorer/${query.trim()}`);
         onClose();
       }
@@ -107,10 +96,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            onClick={() => {
-              play('spotlight-close');
-              onClose();
-            }}
+            onClick={onClose}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
           />
 
@@ -141,10 +127,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   onKeyDown={handleKeyDown}
                 />
                 <button
-                  onClick={() => {
-                    play('spotlight-close');
-                    onClose();
-                  }}
+                  onClick={onClose}
                   className="text-[10px] font-mono text-white/30 border border-white/[0.08] rounded px-1.5 py-0.5 ml-2 hover:text-white/50 hover:border-white/15 transition-colors"
                 >
                   ESC
@@ -167,7 +150,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           <button
                             key={account.address}
                             onClick={() => handleSelect(account)}
-                            onMouseEnter={hasHoverRef.current ? onMouseEnter : undefined}
                             className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
                               i === selectedIndex
                                 ? 'bg-white/[0.04]'

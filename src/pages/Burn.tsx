@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Flame } from 'lucide-react';
 import { useBurns } from '../hooks/useBurns';
 import { Identity, EmptyState, Skeleton, BurnDetailModal } from '../components';
 import { formatQF, relativeTime } from '../utils/format';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
-import { useSound } from '../hooks/useSound';
 import type { BurnEvent } from '../types';
 
 // Protocol color mapping for burn source pills
@@ -23,24 +22,12 @@ function getProtocolConfig(source: string) {
 
 export function Burn() {
   const { data: burns, loading, error } = useBurns();
-  const { play } = useSound();
-  const hasPlayedRef = useRef(false);
-  const prevLoadingRef = useRef(true);
   useDocumentTitle('QFTools — Burn Dashboard');
 
   const totalBurned = burns?.reduce((sum, burn) => sum + burn.amount, 0) || 0;
   const qfpayBurned = burns?.filter(b => b.source === 'qfpay').reduce((sum, burn) => sum + burn.amount, 0) || 0;
   const qnsBurned = burns?.filter(b => b.source === 'qns').reduce((sum, burn) => sum + burn.amount, 0) || 0;
   const [selectedBurn, setSelectedBurn] = useState<{ burn: BurnEvent; protocol: { label: string; color: string; bg: string } } | null>(null);
-
-  // Play burn-whoosh sound when loading transitions from true to false (once per mount)
-  useEffect(() => {
-    if (prevLoadingRef.current && !loading && !hasPlayedRef.current) {
-      play('burn-whoosh');
-      hasPlayedRef.current = true;
-    }
-    prevLoadingRef.current = loading;
-  }, [loading, play]);
 
   return (
     <>
